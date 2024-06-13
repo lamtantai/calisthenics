@@ -84,6 +84,28 @@
             <ion-icon name="add-circle-outline"></ion-icon>
           </button>
         </div>
+
+        <!-- TIME -->
+        <label for="exercise-time-input">Time</label>
+        <div class="input-container">
+          <button class="minus">
+            <ion-icon name="remove-circle-outline"></ion-icon>
+          </button>
+
+          <input
+            type="number"
+            name="exercise-time-input"
+            id="exercise-time-input"
+            min="0"
+            value="0"
+          />
+
+          <button class="plus">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </button>
+        </div>
+
+        <!-- DIALOG BUTTON -->
         <div class="dialog-btn">
           <button class="close-dialog">Cancel</button>
           <button class="submit-dialog">Submit</button>
@@ -134,7 +156,7 @@
         <a href="" class="user-image-container">
           <img
             class="user-image"
-            src="/images/user-image.png"
+            src="./images/user-image.png"
             alt="user-image"
           />
         </a>
@@ -217,6 +239,6 @@
       nomodule
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
     ></script>
-    <script type="module" src="/src/script.js"></script>
+    <script type="module" src="./src/script.js"></script>
   </body>
 </html>
