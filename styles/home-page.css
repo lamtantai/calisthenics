@@ -27,12 +27,14 @@ input {
 a {
   text-decoration: none;
   color: var(--primary-text-clr);
+  -webkit-tap-highlight-color: transparent; /* Removes the blue highlight */
 }
 
 button {
   background: none;
   border: none;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent; /* Removes the blue highlight */
 }
 
 li {
