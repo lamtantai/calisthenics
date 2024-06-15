@@ -16,9 +16,9 @@
     <!-- DIALOG LOG WORKOUT -->
     <div class="overlay"></div>
     <dialog class="add-exercise-dialog">
-      <form action="">
+      <form id="exercise-form">
         <label for="exercise-part">Parts of exercise</label>
-        <select name="exercise" id="exercise-part">
+        <select name="exercise-part" id="exercise-part">
           <option value="chest" class="exercise-type">Chest</option>
           <option value="back" class="exercise-type">Back</option>
           <option value="leg" class="exercise-type">Leg</option>
@@ -29,26 +29,14 @@
           <option value="cardio" class="exercise-type">Cardio</option>
         </select>
 
-        <!-- CHEST -->
-        <label for="chest-exercise">Exercise name</label>
-        <select name="chest-exercise" id="chest-exercise">
-          <option value="chest1" class="exercise-type">Push-up</option>
-          <option value="chest2" class="exercise-type">Planche push-up</option>
-          <option value="chest3" class="exercise-type">Incline push-up</option>
-          <option value="chest4" class="exercise-type">Decline push-up</option>
-          <option value="chest5" class="exercise-type">Wall push-up</option>
-          <option value="chest6" class="exercise-type">
-            Wide hands push-up
-          </option>
-          <option value="chest7" class="exercise-type">
-            Narrow hands push-up
-          </option>
-        </select>
+        <!-- EXERCISE NAME -->
+        <label for="exercise-name">Exercise name</label>
+        <select name="exercise-name" id="exercise-name"></select>
 
         <!-- WEIGHT -->
         <label for="exercise-weight-input">Weight</label>
         <div class="input-container">
-          <button class="minus">
+          <button class="minus-button">
             <ion-icon name="remove-circle-outline"></ion-icon>
           </button>
 
@@ -57,10 +45,11 @@
             name="exercise-weight-input"
             id="exercise-weight-input"
             min="0"
+            step="0.5"
             value="0"
           />
 
-          <button class="plus">
+          <button class="plus-button">
             <ion-icon name="add-circle-outline"></ion-icon>
           </button>
         </div>
@@ -68,7 +57,7 @@
         <!-- REP -->
         <label for="exercise-rep-input">Rep</label>
         <div class="input-container">
-          <button class="minus">
+          <button class="minus-button">
             <ion-icon name="remove-circle-outline"></ion-icon>
           </button>
 
@@ -80,7 +69,7 @@
             value="0"
           />
 
-          <button class="plus">
+          <button class="plus-button">
             <ion-icon name="add-circle-outline"></ion-icon>
           </button>
         </div>
@@ -88,7 +77,7 @@
         <!-- TIME -->
         <label for="exercise-time-input">Time</label>
         <div class="input-container">
-          <button class="minus">
+          <button class="minus-button">
             <ion-icon name="remove-circle-outline"></ion-icon>
           </button>
 
@@ -100,7 +89,7 @@
             value="0"
           />
 
-          <button class="plus">
+          <button class="plus-button">
             <ion-icon name="add-circle-outline"></ion-icon>
           </button>
         </div>
@@ -108,7 +97,7 @@
         <!-- DIALOG BUTTON -->
         <div class="dialog-btn">
           <button class="close-dialog">Cancel</button>
-          <button class="submit-dialog">Submit</button>
+          <button class="submit-dialog" type="submit">Submit</button>
         </div>
       </form>
     </dialog>
@@ -164,7 +153,7 @@
 
       <!-- MAIN SECTION -->
       <main id="home-page">
-        <button class="add-workout">
+        <button class="add-exercise" onclick="showModal()">
           <ion-icon name="add-circle"></ion-icon>
         </button>
 
@@ -179,54 +168,32 @@
           </button>
         </div>
 
-        <!-- WORKOUT LOG -->
-        <div class="workout-log-container">
-          <h3 class="workout-name">Push-ups</h3>
-          <hr />
-          <!-- <div class="workout-log">
-          <ul class="workout-set">
-            <li class="set">Set</li>
-            <li class="set">1</li>
-            <li class="set">2</li>
-          </ul>
-          <ul class="workout-weight">
-            <li class="weight">Weight</li>
-            <li class="weight">1</li>
-            <li class="weight">2</li>
-          </ul>
-          <ul class="workout-rep">
-            <li class="rep">Rep</li>
-            <li class="rep">1</li>
-            <li class="rep">2</li>
-          </ul>
-        </div> -->
-          <table class="workout-table">
-            <thead>
-              <tr>
-                <th class="workout-set">Set</th>
-                <th class="workout-weight">Weight</th>
-                <th class="workout-rep">Rep</th>
-              </tr>
-            </thead>
+        <!-- EXERCISE LOG -->
+        <div id="exercise-log-container">
+          <!-- <div class="exercise-log">
+            <h3 class="exercise-name">Push-ups</h3>
+            <hr />
 
-            <tbody>
-              <tr>
-                <td class="workout-set-log">1</td>
-                <td class="workout-weight-log">2</td>
-                <td class="workout-rep-log">3</td>
-              </tr>
-              <tr>
-                <td class="workout-set-log">1</td>
-                <td class="workout-weight-log">2</td>
-                <td class="workout-rep-log">3</td>
-              </tr>
-              <tr>
-                <td class="workout-set-log">1</td>
-                <td class="workout-weight-log">2</td>
-                <td class="workout-rep-log">3</td>
-              </tr>
-            </tbody>
-          </table>
+            <table class="exercise-table">
+              <thead>
+                <tr>
+                  <th class="exercise-set">Set</th>
+                  <th class="exercise-weight">Weight</th>
+                  <th class="exercise-rep">Rep</th>
+                  <th class="exercise-time">Time</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td class="exercise-set-log">1</td>
+                  <td class="exercise-weight-log">2</td>
+                  <td class="exercise-rep-log">3</td>
+                  <td class="exercise-time-log">4</td>
+                </tr>
+              </tbody>
+            </table>
+          </div> -->
         </div>
       </main>
     </section>
@@ -239,6 +206,6 @@
       nomodule
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
     ></script>
-    <script type="module" src="./src/script.js"></script>
+    <script src="./src/script.js"></script>
   </body>
 </html>

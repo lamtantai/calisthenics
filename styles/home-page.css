@@ -8,7 +8,7 @@
 
 body {
   font-family: 'Teachers', sans-serif;
-  background-color: rgb(236, 242, 243);
+  background-color: var(--background-color);
 }
 
 main {
@@ -27,7 +27,6 @@ input {
 a {
   text-decoration: none;
   color: var(--primary-text-clr);
-  -webkit-tap-highlight-color: transparent; /* Removes the blue highlight */
 }
 
 button {
@@ -50,7 +49,8 @@ input::-webkit-inner-spin-button {
 
 /* Firefox */
 input[type='number'] {
-  -moz-appearance: textfield;
+  appearance: textfield;
+  outline: none;
 }
 
 /*#######################
@@ -83,7 +83,6 @@ dialog {
 select {
   width: 100%;
   padding: 10px;
-  margin: 10px 0;
   border: 1px solid;
   border-radius: 5px;
   background-color: white;
@@ -96,6 +95,10 @@ label {
   text-align: center;
   font-size: var(--secondary-fs);
   font-weight: var(--primary-fw);
+}
+
+label:first-child {
+  padding-top: 0;
 }
 
 .input-container {
@@ -129,9 +132,11 @@ label {
 }
 
 .dialog-btn button {
+  cursor: pointer;
   padding: 15px 0;
   border-radius: 5px;
   width: 50%;
+  border: none;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   font-weight: var(--primary-fw);
   font-size: var(--tertiary-fs);
@@ -145,6 +150,7 @@ label {
   --content: 'Home';
 }
 :root {
+  --background-color: rgb(236, 242, 243);
   --primary-text-clr: rgb(233, 227, 227);
   --secondary-text-clr: rgb(36, 33, 33);
   --primary-bg-clr: rgb(36, 33, 33);
@@ -195,7 +201,7 @@ nav {
   transform: translateY(-50%);
   background-color: var(--secondary-bg-clr);
   border-radius: 50%;
-  border: 5px solid rgb(236, 242, 243);
+  border: 5px solid var(--background-color);
   color: rgb(78, 238, 78);
 }
 
@@ -244,9 +250,9 @@ header h2 {
 /*#######################
       DAY CONTAINER 
 #######################*/
-.add-workout {
+.add-exercise {
   position: fixed;
-  bottom: 10%;
+  bottom: calc(10% + 1vh);
   right: 50%;
   transform: translateX(50%);
   z-index: 1000;
@@ -256,7 +262,7 @@ header h2 {
   display: block;
 }
 
-.add-workout ion-icon {
+.add-exercise ion-icon {
   font-size: 5rem;
   color: rgb(78, 238, 78);
 }
@@ -294,13 +300,14 @@ ion-icon {
 }
 
 /*#######################
-    WORKOUT CONTAINER 
+    EXERCISE CONTAINER 
 #######################*/
-.workout-log-container {
+
+.exercise-log {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   text-align: center;
+  margin: 25px 0;
   padding: 10px;
   width: 100%;
   border-radius: 15px;
@@ -308,14 +315,14 @@ ion-icon {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.workout-name {
-  font-size: var(--primary-fs);
-  letter-spacing: 5px;
+.exercise-log:last-child {
+  margin-bottom: 30%;
 }
 
-.workout-log-container hr {
+.exercise-log hr {
   margin: 10px 0;
 }
 
-/* .workout-table {
-} */
+.exercise-name {
+  text-transform: capitalize;
+}
