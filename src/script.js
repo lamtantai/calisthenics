@@ -12,6 +12,7 @@ const exerciseForm = document.getElementById('exercise-form');
 const exerciseLogContainer = document.getElementById('exercise-log-container');
 const minusButtons = document.querySelectorAll('.minus-button');
 const plusButtons = document.querySelectorAll('.plus-button');
+const exercisePartSelect = document.getElementById('exercise-part');
 
 const partsColor = {
   chest: '#ADD8E6', // Light Blue
@@ -83,15 +84,21 @@ const allExercise = {
 const todayExercises = {};
 
 // EXERCISE FORM FUNCTION
+
+function openModal() {
+  addExerciseDialog.showModal();
+  exerciseForm.reset();
+  changeExerciseName();
+}
+
+function removeSet(event) {
+  console.log(event.target);
+}
+
 function getFormData() {
   const formData = new FormData(exerciseForm);
   const data = Object.fromEntries(formData);
   return data;
-}
-function openModal() {
-  exerciseForm.reset();
-  changeExerciseName();
-  addExerciseDialog.showModal();
 }
 
 function addSet(exerciseName, setDetails) {
@@ -99,50 +106,6 @@ function addSet(exerciseName, setDetails) {
     todayExercises[exerciseName].push(setDetails);
   } else {
     todayExercises[exerciseName] = [setDetails];
-  }
-}
-
-function deleteSet(btn) {
-  // const deleteSetBtn = document.querySelectorAll('.delete-icon ion-icon');
-  // deleteSetBtn.forEach((btn) => {
-  //   btn.addEventListener('click', () => {
-  //     const setDeleteExercise = btn.closest('tr').getAttribute('name');
-  //     const uniqueClass = btn.closest('tr').className;
-  //     const setRemove = document.querySelector(`.${uniqueClass}`);
-  //     console.log(setRemove);
-  //     removeExerciseFromLog(todayExercises, setDeleteExercise, uniqueClass);
-  //     console.log(todayExercises);
-  //   });
-  // });
-
-  btn.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const setRow = btn.closest('tr');
-      const setDeleteExercise = setRow.getAttribute('name');
-      const uniqueClass = setRow.className;
-      const exerciseContainer = document.getElementById(`${setDeleteExercise}`);
-
-      // Update the data structure
-      removeExerciseFromLog(todayExercises, setDeleteExercise, uniqueClass);
-
-      if (todayExercises[setDeleteExercise].length == 0) {
-        exerciseContainer.remove();
-      } else {
-        // Remove the set from the DOM
-        setRow.remove();
-      }
-    });
-  });
-}
-
-// Function to remove an object with a specific uniqueClass
-function removeExerciseFromLog(exercises, part, uniqueClass) {
-  if (exercises[part]) {
-    exercises[part] = exercises[part].filter(
-      (exercise) => exercise.uniqueClass != uniqueClass
-    );
-  } else {
-    console.error(`Part ${part} not found in exercises`);
   }
 }
 
@@ -196,22 +159,62 @@ function renderSet(exerciseName, setDetails) {
       .insertAdjacentHTML('beforeend', HTML2);
   }
 
-  const deleteSetBtns = document.querySelectorAll('.delete-icon ion-icon');
-  deleteSet(deleteSetBtns);
+  const removeExerciseSetBtns = document.querySelectorAll(
+    '.delete-icon ion-icon'
+  );
+
+  removeExerciseSetBtns.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      {
+        const setRow = btn.closest('tr');
+        const setDeleteExercise = setRow.getAttribute('name');
+        const uniqueClass = setRow.className;
+        const exerciseContainer = document.getElementById(setDeleteExercise);
+        if (!exerciseContainer) {
+          console.error(`No element found with ID ${setDeleteExercise}`);
+          return;
+        }
+
+        if (
+          todayExercises[setDeleteExercise] &&
+          todayExercises[setDeleteExercise].length === 0
+        ) {
+          exerciseContainer.remove();
+        } else {
+          // Remove the set from the DOM
+          setRow.remove();
+        }
+
+        // Update the data structure
+        removeExerciseFromLog(todayExercises, setDeleteExercise, uniqueClass);
+      }
+    })
+  );
 
   const trows = document.querySelectorAll('tbody tr');
   trows.forEach((trow) => {
     trow.addEventListener('click', () => {
       const classTrow = trow.className;
+      console.log(classTrow);
+      updateExerciseSet();
     });
   });
 }
 
-function removeSet(event) {
-  console.log(event.target);
+function updateExerciseSet() {}
+
+// Function to remove an object with a specific uniqueClass
+function removeExerciseFromLog(exercises, part, uniqueClass) {
+  if (exercises[part]) {
+    exercises[part] = exercises[part].filter(
+      (exercise) => exercise.uniqueClass != uniqueClass
+    );
+  } else {
+    console.error(`Part ${part} not found in exercises`);
+  }
 }
 
-function renderExerciseInput() {
+function addExerciseFromInputData() {
   const data = getFormData();
   const exercisePart = data['exercise-part'];
   const exerciseName = data['exercise-name'];
@@ -233,15 +236,13 @@ function renderExerciseInput() {
 }
 
 submitDialogBtn.addEventListener('click', () => {
-  renderExerciseInput();
+  addExerciseFromInputData();
   addExerciseDialog.close();
 });
 
 closeDialogBtn.addEventListener('click', (e) => {
   addExerciseDialog.close();
 });
-
-function submitInputExerciseForm(form) {}
 
 exerciseForm.addEventListener('submit', function (event) {
   event.preventDefault();
