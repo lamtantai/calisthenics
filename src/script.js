@@ -175,18 +175,15 @@ function renderSet(exerciseName, setDetails) {
           return;
         }
 
-        if (
-          todayExercises[setDeleteExercise] &&
-          todayExercises[setDeleteExercise].length === 0
-        ) {
+        // Update the data structure
+        removeExerciseFromLog(todayExercises, setDeleteExercise, uniqueClass);
+
+        if (todayExercises[setDeleteExercise].length == 0) {
           exerciseContainer.remove();
         } else {
           // Remove the set from the DOM
           setRow.remove();
         }
-
-        // Update the data structure
-        removeExerciseFromLog(todayExercises, setDeleteExercise, uniqueClass);
       }
     })
   );
