@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calicthenics log app</title>
+    <link rel="icon" href="./images/calis-logo.jpg" type="image/x-icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -15,7 +16,7 @@
   <body>
     <!-- DIALOG LOG WORKOUT -->
     <div class="overlay"></div>
-    <dialog class="add-exercise-dialog">
+    <dialog class="exercise-dialog">
       <form id="exercise-form">
         <label for="exercise-part">Parts of exercise</label>
         <select name="exercise-part" id="exercise-part">
@@ -45,7 +46,7 @@
             name="exercise-weight-input"
             id="exercise-weight-input"
             min="0"
-            step="0.5"
+            step="2.5"
             value="0"
           />
 
@@ -102,6 +103,11 @@
       </form>
     </dialog>
 
+    <!-- DELETE CHANGE SET DETAILS DIALO -->
+    <dialog class="exercise-dialog">
+      <form id="exercise-form had-set"></form>
+    </dialog>
+
     <!-- BOTTOM NAV BAR -->
     <nav>
       <ul class="navbar">
@@ -153,7 +159,7 @@
 
       <!-- MAIN SECTION -->
       <main id="home-page">
-        <button class="add-exercise" onclick="showModal()">
+        <button class="add-exercise" onclick="openModal()">
           <ion-icon name="add-circle"></ion-icon>
         </button>
 

@@ -1,6 +1,6 @@
 'use-strict';
 const navBarIcon = document.querySelectorAll('.nav-link');
-const addExerciseDialog = document.querySelector('.add-exercise-dialog');
+const addExerciseDialog = document.querySelector('.exercise-dialog');
 const closeDialogBtn = document.querySelector('.close-dialog');
 const submitDialogBtn = document.querySelector('.submit-dialog');
 const partOfExercise = document.getElementById('exercise-part');
@@ -10,6 +10,8 @@ const inputTime = document.getElementById('exercise-time-input');
 const exerciseNameOption = document.getElementById('exercise-name');
 const exerciseForm = document.getElementById('exercise-form');
 const exerciseLogContainer = document.getElementById('exercise-log-container');
+const minusButtons = document.querySelectorAll('.minus-button');
+const plusButtons = document.querySelectorAll('.plus-button');
 
 const partsColor = {
   chest: '#ADD8E6', // Light Blue
@@ -19,7 +21,7 @@ const partsColor = {
   biceps: '#F08080', // Light Coral
   shoulder: '#E6E6FA', // Lavender (Light Purple)
   abs: '#E0FFFF', // Light Cyan
-  cardio: '#E0FFFF', // Light Cyan
+  cardio: '#C7B4D6', // Light Cyan
 };
 
 const allExercise = {
@@ -81,7 +83,12 @@ const allExercise = {
 const todayExercises = {};
 
 // EXERCISE FORM FUNCTION
-function showModal() {
+function getFormData() {
+  const formData = new FormData(exerciseForm);
+  const data = Object.fromEntries(formData);
+  return data;
+}
+function openModal() {
   exerciseForm.reset();
   changeExerciseName();
   addExerciseDialog.showModal();
@@ -93,13 +100,56 @@ function addSet(exerciseName, setDetails) {
   } else {
     todayExercises[exerciseName] = [setDetails];
   }
-  console.log(todayExercises);
+}
+
+function deleteSet(btn) {
+  // const deleteSetBtn = document.querySelectorAll('.delete-icon ion-icon');
+  // deleteSetBtn.forEach((btn) => {
+  //   btn.addEventListener('click', () => {
+  //     const setDeleteExercise = btn.closest('tr').getAttribute('name');
+  //     const uniqueClass = btn.closest('tr').className;
+  //     const setRemove = document.querySelector(`.${uniqueClass}`);
+  //     console.log(setRemove);
+  //     removeExerciseFromLog(todayExercises, setDeleteExercise, uniqueClass);
+  //     console.log(todayExercises);
+  //   });
+  // });
+
+  btn.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const setRow = btn.closest('tr');
+      const setDeleteExercise = setRow.getAttribute('name');
+      const uniqueClass = setRow.className;
+      const exerciseContainer = document.getElementById(`${setDeleteExercise}`);
+
+      // Update the data structure
+      removeExerciseFromLog(todayExercises, setDeleteExercise, uniqueClass);
+
+      if (todayExercises[setDeleteExercise].length == 0) {
+        exerciseContainer.remove();
+      } else {
+        // Remove the set from the DOM
+        setRow.remove();
+      }
+    });
+  });
+}
+
+// Function to remove an object with a specific uniqueClass
+function removeExerciseFromLog(exercises, part, uniqueClass) {
+  if (exercises[part]) {
+    exercises[part] = exercises[part].filter(
+      (exercise) => exercise.uniqueClass != uniqueClass
+    );
+  } else {
+    console.error(`Part ${part} not found in exercises`);
+  }
 }
 
 function renderSet(exerciseName, setDetails) {
   const color = partsColor[setDetails.part];
   const name = allExercise[setDetails.part][exerciseName];
-  const html1 = `
+  const HTML1 = `
   <div id= "${exerciseName}" class="exercise-log" style="background-color:${color}">
           <h3 class="exercise-name">${name}</h3>
           <hr />
@@ -107,15 +157,17 @@ function renderSet(exerciseName, setDetails) {
           <table class="exercise-table">
             <thead>
               <tr>
-                <th class="exercise-set">Set</th>
+                <th></th>
                 <th class="exercise-weight">Weight</th>
                 <th class="exercise-rep">Rep</th>
                 <th class="exercise-time">Time</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="exercise-set-log">${setDetails.set}</td>
+              <tr class="${setDetails.uniqueClass}" name="${exerciseName}">
+                <td class='delete-icon'>
+                  <ion-icon name='trash-outline'></ion-icon>
+                </td>
                 <td class="exercise-weight-log">${setDetails.weight}</td>
                 <td class="exercise-rep-log">${setDetails.rep}</td>
                 <td class="exercise-time-log">${setDetails.time}</td>
@@ -125,42 +177,59 @@ function renderSet(exerciseName, setDetails) {
         </div> 
   `;
 
-  const html2 = `
-              <tr>
-                <td class="exercise-set-log">${setDetails.set}</td>
+  const HTML2 = `
+              <tr class="${setDetails.uniqueClass}" name="${exerciseName}">
+                <td class='delete-icon'>
+                  <ion-icon name='trash-outline'></ion-icon>
+                </td>
                 <td class="exercise-weight-log">${setDetails.weight}</td>
                 <td class="exercise-rep-log">${setDetails.rep}</td>
                 <td class="exercise-time-log">${setDetails.time}</td>
               </tr>
   `;
+
   if (todayExercises[exerciseName].length == 1) {
-    exerciseLogContainer.insertAdjacentHTML('beforeend', html1);
+    exerciseLogContainer.insertAdjacentHTML('beforeend', HTML1);
   } else {
     document
       .querySelector(`#${exerciseName} tbody`)
-      .insertAdjacentHTML('beforeend', html2);
+      .insertAdjacentHTML('beforeend', HTML2);
   }
+
+  const deleteSetBtns = document.querySelectorAll('.delete-icon ion-icon');
+  deleteSet(deleteSetBtns);
+
+  const trows = document.querySelectorAll('tbody tr');
+  trows.forEach((trow) => {
+    trow.addEventListener('click', () => {
+      const classTrow = trow.className;
+    });
+  });
+}
+
+function removeSet(event) {
+  console.log(event.target);
 }
 
 function renderExerciseInput() {
-  const formData = new FormData(exerciseForm);
-  const data = Object.fromEntries(formData);
+  const data = getFormData();
   const exercisePart = data['exercise-part'];
   const exerciseName = data['exercise-name'];
   const exerciseRep = data['exercise-rep-input'];
   const exerciseWeight = data['exercise-weight-input'];
   const exerciseTime = data['exercise-time-input'];
+  const unique = exerciseName + '-' + Number(new Date());
 
-  const exerciseObj = {
+  const exerciseSetObj = {
+    uniqueClass: unique,
     part: exercisePart,
     rep: exerciseRep,
     weight: exerciseWeight,
     time: exerciseTime,
-    set: 1,
   };
 
-  addSet(exerciseName, exerciseObj);
-  renderSet(exerciseName, exerciseObj);
+  addSet(exerciseName, exerciseSetObj);
+  renderSet(exerciseName, exerciseSetObj);
 }
 
 submitDialogBtn.addEventListener('click', () => {
@@ -208,18 +277,15 @@ function changeNumberInput(btn) {
   inputTarget.value = value;
 }
 
-const minusButtons = document.querySelectorAll('.minus-button');
-const plusButtons = document.querySelectorAll('.plus-button');
-
 minusButtons.forEach((button) => {
   button.addEventListener('click', function () {
-    changeNumberInput(this);
+    changeNumberInput(button);
   });
 });
 
 plusButtons.forEach((button) => {
   button.addEventListener('click', function () {
-    changeNumberInput(this);
+    changeNumberInput(button);
   });
 });
 

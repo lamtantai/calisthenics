@@ -306,6 +306,7 @@ ion-icon {
 .exercise-log {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   text-align: center;
   margin: 25px 0;
   padding: 10px;
@@ -325,4 +326,49 @@ ion-icon {
 
 .exercise-name {
   text-transform: capitalize;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th {
+  padding: 5px;
+}
+
+td {
+  flex: 1;
+  padding: 3px 0;
+}
+
+.delete-icon ion-icon {
+  font-size: 2rem;
+}
+
+.delete-icon ion-icon:hover {
+  color: rgba(255, 19, 19, 0.9);
+  animation: shake 0.5s infinite;
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  50% {
+    transform: rotate(0eg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
 }
