@@ -1,0 +1,85 @@
+.month-year-header {
+  margin-bottom: 20px;
+}
+
+.calendar-year-header {
+  margin-left: 10px;
+}
+
+.month-scroll-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  overflow-x: scroll;
+  white-space: nowrap;
+  margin-bottom: 20px;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.month-scroll-bar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.month-scroll-bar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.month-button {
+  padding: 5px 10px;
+  border-radius: 15px;
+  border: 1px solid rgb(31, 28, 28);
+  text-transform: capitalize;
+  color: var(--secondary-text-clr);
+}
+
+.month-active {
+  color: white;
+  background-color: blueviolet;
+  border-color: blueviolet;
+}
+
+.date-active {
+  color: white;
+  background-color: blueviolet;
+  border-color: blueviolet;
+}
+
+.date-last-month,
+.date-next-month {
+  color: gray;
+}
+
+#calendar-table {
+  width: 100%;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  color: var(--secondary-text-clr);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.calendar-day {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.calendar-date-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.calendar-date-container li {
+  padding: 10px;
+  font-weight: 500;
+}
+
+#calendar-table ul li {
+  width: calc(100% / 7);
+  cursor: pointer;
+}

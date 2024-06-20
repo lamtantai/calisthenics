@@ -1,18 +1,18 @@
 'use-strict';
-const navBarIcon = document.querySelectorAll('.nav-link');
 const addExerciseDialog = document.querySelector('.exercise-dialog');
 const closeDialogBtn = document.querySelector('.close-dialog');
 const submitDialogBtn = document.querySelector('.submit-dialog');
-const partOfExercise = document.getElementById('exercise-part');
-const inputWeight = document.getElementById('exercise-weight-input');
-const inputRep = document.getElementById('exercise-rep-input');
-const inputTime = document.getElementById('exercise-time-input');
 const exerciseNameOption = document.getElementById('exercise-name');
 const exerciseForm = document.getElementById('exercise-form');
 const exerciseLogContainer = document.getElementById('exercise-log-container');
 const minusButtons = document.querySelectorAll('.minus-button');
 const plusButtons = document.querySelectorAll('.plus-button');
 const exercisePartSelect = document.getElementById('exercise-part');
+const exerciseNameSelect = document.getElementById('exercise-name');
+
+let inputWeight = document.getElementById('exercise-weight-input');
+let inputRep = document.getElementById('exercise-rep-input');
+let inputTime = document.getElementById('exercise-time-input');
 
 const partsColor = {
   chest: '#ADD8E6', // Light Blue
@@ -81,196 +81,176 @@ const allExercise = {
   },
 };
 
-const todayExercises = {};
+const todayExerciseData = {};
+let currentExerciseSet = {};
 
 // EXERCISE FORM FUNCTION
 
 function openModal() {
   addExerciseDialog.showModal();
-  exerciseForm.reset();
   changeExerciseName();
 }
 
-function removeSet(event) {
-  console.log(event.target);
-}
-
-function getFormData() {
-  const formData = new FormData(exerciseForm);
-  const data = Object.fromEntries(formData);
-  return data;
-}
-
-function addSet(exerciseName, setDetails) {
-  if (todayExercises[exerciseName]) {
-    todayExercises[exerciseName].push(setDetails);
-  } else {
-    todayExercises[exerciseName] = [setDetails];
-  }
-}
-
-function renderSet(exerciseName, setDetails) {
-  const color = partsColor[setDetails.part];
-  const name = allExercise[setDetails.part][exerciseName];
-  const HTML1 = `
-  <div id= "${exerciseName}" class="exercise-log" style="background-color:${color}">
-          <h3 class="exercise-name">${name}</h3>
-          <hr />
-
-          <table class="exercise-table">
-            <thead>
-              <tr>
-                <th></th>
-                <th class="exercise-weight">Weight</th>
-                <th class="exercise-rep">Rep</th>
-                <th class="exercise-time">Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="${setDetails.uniqueClass}" name="${exerciseName}">
-                <td class='delete-icon'>
-                  <ion-icon name='trash-outline'></ion-icon>
-                </td>
-                <td class="exercise-weight-log">${setDetails.weight}</td>
-                <td class="exercise-rep-log">${setDetails.rep}</td>
-                <td class="exercise-time-log">${setDetails.time}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div> 
-  `;
-
-  const HTML2 = `
-              <tr class="${setDetails.uniqueClass}" name="${exerciseName}">
-                <td class='delete-icon'>
-                  <ion-icon name='trash-outline'></ion-icon>
-                </td>
-                <td class="exercise-weight-log">${setDetails.weight}</td>
-                <td class="exercise-rep-log">${setDetails.rep}</td>
-                <td class="exercise-time-log">${setDetails.time}</td>
-              </tr>
-  `;
-
-  if (todayExercises[exerciseName].length == 1) {
-    exerciseLogContainer.insertAdjacentHTML('beforeend', HTML1);
-  } else {
-    document
-      .querySelector(`#${exerciseName} tbody`)
-      .insertAdjacentHTML('beforeend', HTML2);
-  }
-
-  const removeExerciseSetBtns = document.querySelectorAll(
-    '.delete-icon ion-icon'
-  );
-
-  removeExerciseSetBtns.forEach((btn) =>
-    btn.addEventListener('click', () => {
-      {
-        const setRow = btn.closest('tr');
-        const setDeleteExercise = setRow.getAttribute('name');
-        const uniqueClass = setRow.className;
-        const exerciseContainer = document.getElementById(setDeleteExercise);
-        if (!exerciseContainer) {
-          console.error(`No element found with ID ${setDeleteExercise}`);
-          return;
-        }
-
-        // Update the data structure
-        removeExerciseFromLog(todayExercises, setDeleteExercise, uniqueClass);
-
-        if (todayExercises[setDeleteExercise].length == 0) {
-          exerciseContainer.remove();
-        } else {
-          // Remove the set from the DOM
-          setRow.remove();
-        }
-      }
-    })
-  );
-
-  const trows = document.querySelectorAll('tbody tr');
-  trows.forEach((trow) => {
-    trow.addEventListener('click', () => {
-      const classTrow = trow.className;
-      console.log(classTrow);
-      updateExerciseSet();
-    });
-  });
-}
-
-function updateExerciseSet() {}
-
-// Function to remove an object with a specific uniqueClass
-function removeExerciseFromLog(exercises, part, uniqueClass) {
-  if (exercises[part]) {
-    exercises[part] = exercises[part].filter(
-      (exercise) => exercise.uniqueClass != uniqueClass
-    );
-  } else {
-    console.error(`Part ${part} not found in exercises`);
-  }
-}
-
-function addExerciseFromInputData() {
-  const data = getFormData();
-  const exercisePart = data['exercise-part'];
-  const exerciseName = data['exercise-name'];
-  const exerciseRep = data['exercise-rep-input'];
-  const exerciseWeight = data['exercise-weight-input'];
-  const exerciseTime = data['exercise-time-input'];
-  const unique = exerciseName + '-' + Number(new Date());
-
-  const exerciseSetObj = {
-    uniqueClass: unique,
-    part: exercisePart,
-    rep: exerciseRep,
-    weight: exerciseWeight,
-    time: exerciseTime,
-  };
-
-  addSet(exerciseName, exerciseSetObj);
-  renderSet(exerciseName, exerciseSetObj);
-}
+closeDialogBtn.addEventListener('click', () => {
+  addExerciseDialog.close();
+});
 
 submitDialogBtn.addEventListener('click', () => {
-  addExerciseFromInputData();
   addExerciseDialog.close();
 });
 
-closeDialogBtn.addEventListener('click', (e) => {
-  addExerciseDialog.close();
-});
+function addOrUpdateExercise() {
+  const exerciseNameValue = exerciseNameSelect.value;
+  const unique = exerciseNameValue + '-' + Date.now();
+  const exerciseObj = {
+    uniqueClass: unique,
+    part: exercisePartSelect.value,
+    rep: inputRep.value,
+    weight: inputWeight.value,
+    time: inputTime.value,
+  };
+
+  if (!todayExerciseData[exerciseNameValue]) {
+    todayExerciseData[exerciseNameValue] = [exerciseObj];
+  } else {
+    const dataArrIndex = todayExerciseData[exerciseNameValue].findIndex(
+      (set) => set.uniqueClass == currentExerciseSet.uniqueClass
+    );
+
+    if (dataArrIndex == -1) {
+      todayExerciseData[exerciseNameValue].push(exerciseObj);
+    } else {
+      todayExerciseData[exerciseNameValue][dataArrIndex] = exerciseObj;
+    }
+  }
+
+  renderExerciseData();
+  exerciseForm.reset();
+}
+
+function renderExerciseData() {
+  exerciseLogContainer.innerHTML = '';
+  for (let [exerciseName, exerciseData] of Object.entries(todayExerciseData)) {
+    exerciseData.forEach(({ part, rep, time, uniqueClass, weight }, index) => {
+      const HTML1 = `
+      <div id= "${exerciseName}" class="exercise-log" style="background-color:${partsColor[part]}">
+              <h3 class="exercise-name">${allExercise[part][exerciseName]}</h3>
+              <hr />
+    
+              <table class="exercise-table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th class="exercise-weight">Weight</th>
+                    <th class="exercise-rep">Rep</th>
+                    <th class="exercise-time">Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="${uniqueClass}" name="${exerciseName}">
+                    <td class='delete-icon' onclick='deleteExerciseSet(this)'>
+                      <ion-icon name='trash-outline'></ion-icon>
+                    </td>
+                    <td class="exercise-weight-log"  onclick='editExerciseSet(this)'>${weight}</td>
+                    <td class="exercise-rep-log"  onclick='editExerciseSet(this)'>${rep}</td>
+                    <td class="exercise-time-log"  onclick='editExerciseSet(this)'>${time}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div> 
+      `;
+
+      const HTML2 = `
+              <tr class="${uniqueClass}" name="${exerciseName}">
+                <td class='delete-icon' onclick='deleteExerciseSet(this)'>
+                  <ion-icon name='trash-outline'></ion-icon>
+                </td>
+                <td class="exercise-weight-log"  onclick='editExerciseSet(this)'>${weight}</td>
+                <td class="exercise-rep-log"  onclick='editExerciseSet(this)'>${rep}</td>
+                <td class="exercise-time-log"  onclick='editExerciseSet(this)'>${time}</td>
+              </tr>
+  `;
+
+      if (index === 0) {
+        exerciseLogContainer.insertAdjacentHTML('beforeend', HTML1);
+      } else {
+        const exerciseTableBody = document.querySelector(
+          `#${exerciseName} tbody`
+        );
+        if (exerciseTableBody) {
+          exerciseTableBody.insertAdjacentHTML('beforeend', HTML2);
+        } else {
+          console.error(`Table body not found for exercise: ${exerciseName}`);
+        }
+      }
+    });
+  }
+}
+
+function editExerciseSet(exerciseSet) {
+  const exerciseSetRow = exerciseSet.parentElement;
+  const exerciseNameValue = exerciseSetRow.getAttribute('name');
+  const dataArrIndex = todayExerciseData[exerciseNameValue].findIndex(
+    (set) => set.uniqueClass === exerciseSetRow.className
+  );
+
+  currentExerciseSet = todayExerciseData[exerciseNameValue][dataArrIndex];
+
+  exercisePartSelect.value = currentExerciseSet.part;
+  exerciseNameSelect.value = exerciseNameValue;
+  inputRep.value = currentExerciseSet.rep;
+  inputWeight.value = currentExerciseSet.weight;
+  inputTime.value = currentExerciseSet.time;
+
+  addExerciseDialog.showModal();
+}
+
+function deleteExerciseSet(btn) {
+  const exerciseSetRow = btn.parentElement;
+  const exerciseNameValue = exerciseSetRow.getAttribute('name');
+  const dataArrIndex = todayExerciseData[exerciseNameValue].findIndex(
+    (set) => set.uniqueClass === exerciseSetRow.className
+  );
+
+  todayExerciseData[exerciseNameValue].splice(dataArrIndex, 1);
+
+  if (todayExerciseData[exerciseNameValue].length == 0) {
+    const exerciseNameContainer = document.getElementById(exerciseNameValue);
+    exerciseNameContainer.remove();
+  } else {
+    exerciseSetRow.remove();
+  }
+}
 
 exerciseForm.addEventListener('submit', function (event) {
   event.preventDefault();
+  addOrUpdateExercise();
 });
 
 function changeExerciseName() {
   exerciseNameOption.innerHTML = '';
-  const partChoose = allExercise[partOfExercise.value];
+  const partChoose = allExercise[exercisePartSelect.value];
   for (const [key, value] of Object.entries(partChoose)) {
     const option = document.createElement('option');
     option.value = key;
     option.textContent = value;
-    option.className = 'exercise-type';
     exerciseNameOption.appendChild(option);
   }
 }
 
-partOfExercise.addEventListener('change', changeExerciseName);
+exercisePartSelect.addEventListener('change', changeExerciseName);
 
 function changeNumberInput(btn) {
   const inputTarget = btn.parentElement.querySelector('input');
   const step = parseFloat(inputTarget.step) || 1;
   const min = parseFloat(inputTarget.min) || 0;
-  const max = parseFloat(inputTarget.max) || Infinity;
 
   let value = parseFloat(inputTarget.value) || 0;
 
   if (btn.classList.contains('minus-button')) {
     value = Math.max(value - step, min);
   } else if (btn.classList.contains('plus-button')) {
-    value = Math.min(value + step, max);
+    value = value + step;
   }
   inputTarget.value = value;
 }
@@ -286,19 +266,3 @@ plusButtons.forEach((button) => {
     changeNumberInput(button);
   });
 });
-
-// NAV BAR FUNCTION
-function clearCurrentPage() {
-  navBarIcon.forEach((icon) => {
-    icon.classList.remove('current-page');
-  });
-}
-
-navBarIcon.forEach((icon) =>
-  icon.addEventListener('click', () => {
-    clearCurrentPage();
-    const nameAttribute = icon.getAttribute('name');
-    icon.style.setProperty('--content', `'${nameAttribute}'`);
-    icon.classList.add('current-page');
-  })
-);

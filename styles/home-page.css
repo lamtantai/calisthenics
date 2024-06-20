@@ -1,71 +1,6 @@
-*,
-*::after,
-*::before {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: 'Teachers', sans-serif;
-  background-color: var(--background-color);
-}
-
-main {
-  padding: 0 20px;
-}
-
-a,
-button,
-span,
-li,
-label,
-input {
-  display: block;
-}
-
-a {
-  text-decoration: none;
-  color: var(--primary-text-clr);
-}
-
-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent; /* Removes the blue highlight */
-}
-
-li {
-  list-style: none;
-}
-
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type='number'] {
-  appearance: textfield;
-  outline: none;
-}
-
 /*#######################
         DIALOG FORM
 #######################*/
-
-.overlay {
-  display: none;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 10;
-}
 
 dialog {
   position: absolute;
@@ -145,83 +80,10 @@ label:first-child {
 }
 
 /*#######################
-          ROOT
-#######################*/
-/* COLOR */
-:root {
-  --content: 'Home';
-}
-:root {
-  --background-color: rgb(236, 242, 243);
-  --primary-text-clr: rgb(233, 227, 227);
-  --secondary-text-clr: rgb(36, 33, 33);
-  --primary-bg-clr: rgb(36, 33, 33);
-  --secondary-bg-clr: rgb(252, 245, 245);
-}
-
-/* TYPOGRAPHY */
-:root {
-  --primary-fs: 2rem;
-  --secondary-fs: 1.1rem;
-  --tertiary-fs: 1rem;
-  --primary-fw: 700;
-  --secondary-fw: 500;
-  --tertiary-fw: 400;
-}
-
-/*#######################
-        NAV BAR 
-#######################*/
-nav {
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: var(--secondary-bg-clr);
-  border-radius: 10px 10px 0 0;
-}
-
-.navbar {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-/* .navbar li {
-} */
-
-.nav-link {
-  color: var(--secondary-text-clr);
-}
-
-.nav-link ion-icon {
-  padding: 15px;
-}
-
-.current-page {
-  transform: translateY(-50%);
-  background-color: var(--secondary-bg-clr);
-  border-radius: 50%;
-  border: 5px solid var(--background-color);
-  color: rgb(78, 238, 78);
-}
-
-.current-page::before {
-  position: absolute;
-  content: var(--content);
-  bottom: -50%;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/*#######################
       HEADER STYLE 
 #######################*/
 
 header {
-  margin-top: 15px;
-  padding: 0 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -230,11 +92,6 @@ header {
 .greeting {
   font-size: var(--secondary-fs);
   font-weight: var(--secondary-fw);
-}
-
-header h2 {
-  font-size: var(--primary-fs);
-  font-weight: var(--primary-fw);
 }
 
 .user-image-container {
@@ -289,10 +146,6 @@ header h2 {
 .prev-day-btn,
 .day {
   color: var(--primary-text-clr);
-}
-
-ion-icon {
-  font-size: 2rem;
 }
 
 .day {

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calicthenics log app</title>
+    <link rel="icon" href="../images/calis-logo.jpg" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Teachers:ital,wght@0,400..800;1,400..800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles/home-page.css" />
+    <link rel="stylesheet" href="../styles/style.css" />
+  </head>
+  <body>
+    <!-- DIALOG LOG WORKOUT -->
+    <div class="overlay"></div>
+    <dialog class="exercise-dialog">
+      <form id="exercise-form">
+        <label for="exercise-part">Parts of exercise</label>
+        <select name="exercise-part" id="exercise-part">
+          <option value="chest">Chest</option>
+          <option value="back">Back</option>
+          <option value="leg">Leg</option>
+          <option value="triceps">Triceps</option>
+          <option value="biceps">Biceps</option>
+          <option value="shoulder">Shoulder</option>
+          <option value="abs">Abs</option>
+          <option value="cardio">Cardio</option>
+        </select>
+
+        <!-- EXERCISE NAME -->
+        <label for="exercise-name">Exercise name</label>
+        <select name="exercise-name" id="exercise-name"></select>
+
+        <!-- WEIGHT -->
+        <label for="exercise-weight-input">Weight</label>
+        <div class="input-container">
+          <button class="minus-button" type="button">
+            <ion-icon name="remove-circle-outline"></ion-icon>
+          </button>
+
+          <input
+            type="number"
+            name="exercise-weight-input"
+            id="exercise-weight-input"
+            min="0"
+            step="2.5"
+            value="0"
+          />
+
+          <button class="plus-button" type="button">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </button>
+        </div>
+
+        <!-- REP -->
+        <label for="exercise-rep-input">Rep</label>
+        <div class="input-container">
+          <button class="minus-button" type="button">
+            <ion-icon name="remove-circle-outline"></ion-icon>
+          </button>
+
+          <input
+            type="number"
+            name="exercise-rep-input"
+            id="exercise-rep-input"
+            min="0"
+            value="0"
+          />
+
+          <button class="plus-button" type="button">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </button>
+        </div>
+
+        <!-- TIME -->
+        <label for="exercise-time-input">Time</label>
+        <div class="input-container">
+          <button class="minus-button" type="button">
+            <ion-icon name="remove-circle-outline"></ion-icon>
+          </button>
+
+          <input
+            type="number"
+            name="exercise-time-input"
+            id="exercise-time-input"
+            min="0"
+            value="0"
+          />
+
+          <button class="plus-button" type="button">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </button>
+        </div>
+
+        <!-- DIALOG BUTTON -->
+        <div class="dialog-btn">
+          <button class="close-dialog" type="button">Cancel</button>
+          <button class="submit-dialog">Submit</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- BOTTOM NAV BAR -->
+    <nav>
+      <ul class="navbar">
+        <li>
+          <a href="#" class="nav-link current-page" name="Home"
+            ><ion-icon class="home-icon" name="home-outline"></ion-icon>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link" name="Data">
+            <ion-icon
+              classsclass="data-icon"
+              name="bar-chart-outline"
+            ></ion-icon>
+          </a>
+        </li>
+
+        <li>
+          <a href="./calendar-page.html" class="nav-link" name="Calendar">
+            <ion-icon
+              classsclass="calendar-icon"
+              name="calendar-outline"
+            ></ion-icon>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link" name="User">
+            <ion-icon classsclass="user-icon" name="person-outline"></ion-icon>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <section id="home-page">
+      <!-- HEADER -->
+      <header>
+        <div class="left-header">
+          <h3 class="greeting">Hello, Bin</h3>
+          <h2>Let's Workout</h2>
+        </div>
+        <a href="#" class="user-image-container">
+          <img
+            class="user-image"
+            src="../images/user-image.png"
+            alt="user-image"
+          />
+        </a>
+      </header>
+
+      <!-- MAIN SECTION -->
+      <main id="home-page">
+        <button class="add-exercise" onclick="openModal()">
+          <ion-icon name="add-circle"></ion-icon>
+        </button>
+
+        <!-- DAY CONTAINER -->
+        <div class="day-container">
+          <button class="next-day-btn">
+            <ion-icon name="chevron-back-outline"></ion-icon>
+          </button>
+          <a href="#" class="day">TODAY</a>
+          <button class="prev-day-btn">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </button>
+        </div>
+
+        <!-- EXERCISE LOG -->
+        <div id="exercise-log-container">
+          <!-- <div class="exercise-log">
+            <h3 class="exercise-name">Push-ups</h3>
+            <hr />
+
+            <table class="exercise-table">
+              <thead>
+                <tr>
+                  <th class="exercise-set">Set</th>
+                  <th class="exercise-weight">Weight</th>
+                  <th class="exercise-rep">Rep</th>
+                  <th class="exercise-time">Time</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td class="exercise-set-log">1</td>
+                  <td class="exercise-weight-log">2</td>
+                  <td class="exercise-rep-log">3</td>
+                  <td class="exercise-time-log">4</td>
+                </tr>
+              </tbody>
+            </table>
+          </div> -->
+        </div>
+      </main>
+    </section>
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+    <script src="../src/script.js"></script>
+    <script src="../src/nav-bar.js"></script>
+  </body>
+</html>
