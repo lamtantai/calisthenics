@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calicthenics log app</title>
+    <link rel="icon" href="./images/calis-logo.jpg" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Teachers:ital,wght@0,400..800;1,400..800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="./styles/calendar-page.css" />
+  </head>
+  <body>
+    <!-- BOTTOM NAV BAR -->
+    <nav>
+      <ul class="navbar">
+        <li>
+          <a href="./index.html" class="nav-link" name="Home"
+            ><ion-icon class="home-icon" name="home-outline"></ion-icon>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link" name="Data">
+            <ion-icon
+              classsclass="data-icon"
+              name="bar-chart-outline"
+            ></ion-icon>
+          </a>
+        </li>
+
+        <li>
+          <a href="#" class="nav-link" name="Calendar">
+            <ion-icon
+              classsclass="calendar-icon"
+              name="calendar-outline"
+            ></ion-icon>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link" name="User">
+            <ion-icon classsclass="user-icon" name="person-outline"></ion-icon>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <header class="month-year-header">
+      <h2>
+        <span class="calendar-month-header">JUN</span>,<span
+          class="calendar-year-header"
+          >2024</span
+        >
+      </h2>
+    </header>
+    <ul class="month-scroll-bar">
+      <li><a href="#" class="january month-button">january</a></li>
+      <li><a href="#" class="february month-button">febuary</a></li>
+      <li><a href="#" class="march month-button">march</a></li>
+      <li><a href="#" class="april month-button">april</a></li>
+      <li><a href="#" class="may month-button">may</a></li>
+      <li><a href="#" class="june month-button month-active">june</a></li>
+      <li><a href="#" class="july month-button">july</a></li>
+      <li><a href="#" class="august month-button">august</a></li>
+      <li><a href="#" class="september month-button">september</a></li>
+      <li><a href="#" class="october month-button">october</a></li>
+      <li><a href="#" class="november month-button">november</a></li>
+      <li><a href="#" class="december month-button">december</a></li>
+    </ul>
+    <div id="calendar-table">
+      <ul class="calendar-day">
+        <li>SUN</li>
+        <li>MON</li>
+        <li>TUE</li>
+        <li>WED</li>
+        <li>THU</li>
+        <li>FRI</li>
+        <li>SAT</li>
+      </ul>
+      <ul class="calendar-date-container"></ul>
+    </div>
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+    <script src="./src/nav-bar.js"></script>
+    <script src="./src/calendar-page.js"></script>
+  </body>
+</html>

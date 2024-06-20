@@ -12,6 +12,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles/home-page.css" />
+    <link rel="stylesheet" href="./styles/style.css" />
   </head>
   <body>
     <!-- DIALOG LOG WORKOUT -->
@@ -20,14 +21,14 @@
       <form id="exercise-form">
         <label for="exercise-part">Parts of exercise</label>
         <select name="exercise-part" id="exercise-part">
-          <option value="chest" class="exercise-type">Chest</option>
-          <option value="back" class="exercise-type">Back</option>
-          <option value="leg" class="exercise-type">Leg</option>
-          <option value="triceps" class="exercise-type">Triceps</option>
-          <option value="biceps" class="exercise-type">Biceps</option>
-          <option value="shoulder" class="exercise-type">Shoulder</option>
-          <option value="abs" class="exercise-type">Abs</option>
-          <option value="cardio" class="exercise-type">Cardio</option>
+          <option value="chest">Chest</option>
+          <option value="back">Back</option>
+          <option value="leg">Leg</option>
+          <option value="triceps">Triceps</option>
+          <option value="biceps">Biceps</option>
+          <option value="shoulder">Shoulder</option>
+          <option value="abs">Abs</option>
+          <option value="cardio">Cardio</option>
         </select>
 
         <!-- EXERCISE NAME -->
@@ -37,7 +38,7 @@
         <!-- WEIGHT -->
         <label for="exercise-weight-input">Weight</label>
         <div class="input-container">
-          <button class="minus-button">
+          <button class="minus-button" type="button">
             <ion-icon name="remove-circle-outline"></ion-icon>
           </button>
 
@@ -50,7 +51,7 @@
             value="0"
           />
 
-          <button class="plus-button">
+          <button class="plus-button" type="button">
             <ion-icon name="add-circle-outline"></ion-icon>
           </button>
         </div>
@@ -58,7 +59,7 @@
         <!-- REP -->
         <label for="exercise-rep-input">Rep</label>
         <div class="input-container">
-          <button class="minus-button">
+          <button class="minus-button" type="button">
             <ion-icon name="remove-circle-outline"></ion-icon>
           </button>
 
@@ -70,7 +71,7 @@
             value="0"
           />
 
-          <button class="plus-button">
+          <button class="plus-button" type="button">
             <ion-icon name="add-circle-outline"></ion-icon>
           </button>
         </div>
@@ -78,7 +79,7 @@
         <!-- TIME -->
         <label for="exercise-time-input">Time</label>
         <div class="input-container">
-          <button class="minus-button">
+          <button class="minus-button" type="button">
             <ion-icon name="remove-circle-outline"></ion-icon>
           </button>
 
@@ -90,22 +91,17 @@
             value="0"
           />
 
-          <button class="plus-button">
+          <button class="plus-button" type="button">
             <ion-icon name="add-circle-outline"></ion-icon>
           </button>
         </div>
 
         <!-- DIALOG BUTTON -->
         <div class="dialog-btn">
-          <button class="close-dialog">Cancel</button>
-          <button class="submit-dialog" type="submit">Submit</button>
+          <button class="close-dialog" type="button">Cancel</button>
+          <button class="submit-dialog">Submit</button>
         </div>
       </form>
-    </dialog>
-
-    <!-- DELETE CHANGE SET DETAILS DIALO -->
-    <dialog class="updateExerciseSetDialog">
-      <form id="updateExerciseSetForm"></form>
     </dialog>
 
     <!-- BOTTOM NAV BAR -->
@@ -126,7 +122,7 @@
         </li>
 
         <li>
-          <a href="#" class="nav-link" name="Calendar">
+          <a href="./calendar-page.html" class="nav-link" name="Calendar">
             <ion-icon
               classsclass="calendar-icon"
               name="calendar-outline"
@@ -151,7 +147,7 @@
         <a href="#" class="user-image-container">
           <img
             class="user-image"
-            src="./images/user-image.png"
+            src="../images/user-image.png"
             alt="user-image"
           />
         </a>
@@ -213,5 +209,6 @@
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
     ></script>
     <script src="./src/script.js"></script>
+    <script src="./src/nav-bar.js"></script>
   </body>
 </html>
